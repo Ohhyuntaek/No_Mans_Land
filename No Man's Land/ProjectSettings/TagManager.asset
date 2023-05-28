@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - gun
+  - player
+  - bullet
+  - enemy
+  - CameraLine
   layers:
   - Default
   - TransparentFX
@@ -11,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - CameraLine
+  - Bullet
   - 
   - 
   - 
@@ -40,4 +45,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3116365615
+    locked: 0
+  - name: Trench
+    uniqueID: 3898641767
+    locked: 0
+  - name: Player
+    uniqueID: 1413783509
+    locked: 0
+  - name: Gun
+    uniqueID: 400499335
+    locked: 0
+  - name: Enemy
+    uniqueID: 2293650657
+    locked: 0
+  - name: Bullet
+    uniqueID: 1531577613
+    locked: 0
+  - name: Bomb
+    uniqueID: 2523914989
     locked: 0
