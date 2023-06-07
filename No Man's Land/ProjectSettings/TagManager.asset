@@ -5,10 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - gun
-  - player
   - bullet
   - enemy
   - CameraLine
+  - enemyBullet
+  - enemyBody
   layers:
   - Default
   - TransparentFX
@@ -52,17 +53,20 @@ TagManager:
   - name: Trench
     uniqueID: 3898641767
     locked: 0
-  - name: Player
-    uniqueID: 1413783509
-    locked: 0
   - name: Gun
     uniqueID: 400499335
+    locked: 0
+  - name: EnemyBody
+    uniqueID: 3623078595
     locked: 0
   - name: Enemy
     uniqueID: 2293650657
     locked: 0
   - name: Bullet
     uniqueID: 1531577613
+    locked: 0
+  - name: Player
+    uniqueID: 1413783509
     locked: 0
   - name: Bomb
     uniqueID: 2523914989

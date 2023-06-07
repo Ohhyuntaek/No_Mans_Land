@@ -374,8 +374,10 @@
 "Assets/Free Pixel Army/Scripts/IdleButton.cs"
 "Assets/Free Pixel Army/Scripts/WalkButton.cs"
 "Assets/Free Pixel Army/Scripts/YawnButton.cs"
+"Assets/GameManager.cs"
 "Assets/Script/BackgroundScrolling.cs"
 "Assets/Script/Bullet.cs"
+"Assets/Script/EnemyScript.cs"
 "Assets/Script/PlayerController.cs"
 -langversion:9.0
 
