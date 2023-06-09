@@ -10,6 +10,7 @@ TagManager:
   - CameraLine
   - enemyBullet
   - enemyBody
+  - enemyTrench
   layers:
   - Default
   - TransparentFX

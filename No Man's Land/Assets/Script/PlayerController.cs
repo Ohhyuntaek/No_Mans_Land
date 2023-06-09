@@ -1,32 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public int HP = 10;
+    public int maxHP = 10;
+    public int nowHP = 10;
     public float moveSpeed = 1f;
     public float moveSpeedinZAxis = 1f;
     public GameObject bulletPrefeb;
     public Transform muzzle;
+
     public float bulletSpeed = 10f;
     public int extraBullet = 30;
-
-    Rigidbody2D rb;
-
+    public Rigidbody2D rb;
     public BackgroundScrolling backgroundScrolling;
+
+    public GameObject prfHpBar;
+    public GameObject canvas;
+    public float height = 1f;
+    RectTransform hpBar;
+
+    public Image nowHPBar;
+
+    // public EnemyTrenchScript enemyTrenchScript = new EnemyTrenchScript();
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         // backgroundScrolling.StopScrolling();
+
+        hpBar = Instantiate(prfHpBar, canvas.transform).GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+
+        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 0.5f, transform.position.y + height, 0));
+        hpBar.position = _hpBarPos;
+
+        nowHPBar.fillAmount = (float)nowHP / (float)maxHP;
 
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
@@ -94,8 +112,12 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("enemyBullet"))
         {
             Destroy(collision.gameObject);
-            HP -= 1;
-            Debug.Log(HP);
+            nowHP -= 1;
+            Debug.Log(nowHP);
+            if (nowHP <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -106,6 +128,11 @@ public class PlayerController : MonoBehaviour
             extraBullet = 30;
             Debug.Log("Extra Bullet is " + extraBullet + ". " + "Fire Again!");
             Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("enemyTrench"))
+        {
+            Time.timeScale = 0f;
+            EnemyTrenchScript.creditCheck = true;
         }
     }
 }

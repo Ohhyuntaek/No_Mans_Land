@@ -6,9 +6,10 @@ public class Bullet : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("CameraLine"))
+        if(collision.gameObject.CompareTag("enemyBullet"))
         {
             Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
     }
 }
