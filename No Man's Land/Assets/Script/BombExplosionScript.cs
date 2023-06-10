@@ -11,6 +11,7 @@ public class BombExplosionScript : MonoBehaviour
     void Start()
     {
         explosedSound = GetComponent<AudioSource>();
+        Destroy(gameObject, 2f);
     }
 
     // Update is called once per frame

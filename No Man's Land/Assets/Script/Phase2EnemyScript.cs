@@ -69,9 +69,16 @@ public class Phase2EnemyScript : MonoBehaviour
             SpawnBullet();
             timer = 0f;
         }
+
+        if (Phase2GameManager.isActivateLetherGun)
+        {
+            Destroy(gameObject);
+            Instantiate(explosedBody, transform.position, transform.rotation);
+            
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("bullet"))
         {
@@ -79,11 +86,12 @@ public class Phase2EnemyScript : MonoBehaviour
             Destroy(collision.gameObject);
             Instantiate(explosedBody, transform.position, transform.rotation);
         }
+
     }
 
     private void SpawnBullet()
     {
-        if (!DontFireCheck)
+        if (!DontFireCheck && !Phase2GameManager.isRedTankDown)
         {
             gunShotSound.Play();
             GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);

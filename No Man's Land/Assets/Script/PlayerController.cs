@@ -130,18 +130,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("enemyBullet"))
+        if (collision.gameObject.CompareTag("enemyBullet"))
         {
             Destroy(collision.gameObject);
             nowHP -= 1;
             Debug.Log(nowHP);
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.gameObject.CompareTag("enemyBody"))
         {
             extraBullet = 30;

@@ -71,6 +71,13 @@ public class TankScript : MonoBehaviour
             SpawnBullet();
             timer = 0f;
         }
+
+        if (Phase2GameManager.isActivateLetherGun)
+        {
+            Destroy(gameObject);
+            Instantiate(explosedTank, transform.position, transform.rotation);
+            Phase2GameManager.maxTank -= 1;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -86,13 +93,13 @@ public class TankScript : MonoBehaviour
                 Instantiate(explosedTank, transform.position, transform.rotation);
                 Phase2GameManager.maxTank -= 1;
             }
-            
+
         }
     }
 
     private void SpawnBullet()
     {
-        if (!DontFireCheck)
+        if (!DontFireCheck && !Phase2GameManager.isRedTankDown)
         {
             bulletShotSound.Play();
             GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);

@@ -96,7 +96,7 @@ public class Phase2PlayerController : MonoBehaviour
         Destroy(spawnedBullet, 1.7f);        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("enemyBullet"))
         {
@@ -104,11 +104,7 @@ public class Phase2PlayerController : MonoBehaviour
             nowHP -= 1;
             Debug.Log(nowHP);
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("bombExplosion"))
+        if (collision.gameObject.CompareTag("bombExplosion"))
         {
             nowHP -= 1;
             Debug.Log(nowHP);

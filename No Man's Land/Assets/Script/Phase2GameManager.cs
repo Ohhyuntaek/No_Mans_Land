@@ -7,15 +7,23 @@ public class Phase2GameManager : MonoBehaviour
 {
     public GameObject enemy;
     public GameObject tank;
+    public GameObject redTank;
+    public GameObject letherGun;
     public GameObject deadCredit;
+    public GameObject endingCredit;
     public float spawnXAxis = 15f;
     public float afterTime = 45f;
+    public float redtankAfterTime = 90f;
+    public float letherGunAfterTime = 30f;
 
     public static int maxTank = 0;
 
     public bool enableSpawnEnemy = false;
     public bool enableSpawnTank = false;
+    public bool enableSpawnRedTank = false;
+    public static bool isActivateLetherGun = false;
     public static bool deadCreditCheck = false;
+    public static bool isRedTankDown = false;
 
     public AudioSource BackgroundSound;
 
@@ -27,6 +35,8 @@ public class Phase2GameManager : MonoBehaviour
         Time.timeScale = 1f;
         InvokeRepeating("SpawnEnemy", 3, 3); //3초 후 부터, SpawnEnemy함수를 3초마다 반복해서 실행 시킵니다.
         InvokeRepeating("SpawnTank", afterTime, 15);
+        InvokeRepeating("SpawnLetherGun", letherGunAfterTime, 15);
+        Invoke("SpawnRedTank", redtankAfterTime);
         BackgroundSound = GetComponent<AudioSource>();
         BackgroundSound.Play();
     }
@@ -34,8 +44,8 @@ public class Phase2GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if (deadCreditCheck)
-        {
+        if (deadCreditCheck)
+        { 
             deadCredit.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -44,15 +54,22 @@ public class Phase2GameManager : MonoBehaviour
             }
         }
 
+        if (isRedTankDown == true)
+        {
+            endingCredit.SetActive(true);
+            // isRedTankDown = false;
+        }
+
         if (Phase2PlayerController.isDead)
         {
             BackgroundSound.Pause();
         }
+
     }
 
     private void SpawnEnemy()
     {
-        if (enableSpawnEnemy && !Phase2PlayerController.isDead)
+        if (enableSpawnEnemy && !Phase2PlayerController.isDead && !isRedTankDown)
         {
             float randomY = Random.Range(-5f, 5f);
             GameObject spawnEnemy = (GameObject)Instantiate(enemy, new Vector3(10f, randomY, 0f), Quaternion.identity); 
@@ -63,7 +80,7 @@ public class Phase2GameManager : MonoBehaviour
     {
         if (maxTank <= 2)
         {
-            if (enableSpawnTank && !Phase2PlayerController.isDead)
+            if (enableSpawnTank && !Phase2PlayerController.isDead && !isRedTankDown)
             {
                 float randomY = Random.Range(-5f, 5f);
                 float randomZ = Random.Range(0f, 360f);
@@ -72,6 +89,22 @@ public class Phase2GameManager : MonoBehaviour
                 maxTank += 1;
             }
         }
-        
+    }
+
+    private void SpawnRedTank()
+    {
+        if (enableSpawnRedTank && !Phase2PlayerController.isDead)
+        {
+            float randomY = Random.Range(-1f, 1f);
+            float randomZ = Random.Range(0f, 30f);
+            Quaternion rotation = Quaternion.Euler(0, 0, randomZ);
+            GameObject spawnTank = (GameObject)Instantiate(redTank, new Vector3(gameObject.transform.position.x + spawnXAxis, randomY, 0f), rotation);
+        }
+    }
+
+    private void SpawnLetherGun()
+    {
+        float RandomY = Random.Range(-4f, 4f) - Random.Range(-2f, 2f);
+        Instantiate(letherGun, new Vector3(-7.5f, RandomY, 0f), Quaternion.identity);
     }
 }
