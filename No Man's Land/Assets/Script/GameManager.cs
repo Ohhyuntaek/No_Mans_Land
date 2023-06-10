@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject enemy;
     public bool enableSpawn = false;
+    public static bool deadCreditCheck = false;
 
     // private float spawnTime = Random.Range(1f, 5f);
 
@@ -18,7 +20,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         
+        if (deadCreditCheck)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("Phase 1");
+            }
+        }    
     }
 
     private void SpawnEnemy()

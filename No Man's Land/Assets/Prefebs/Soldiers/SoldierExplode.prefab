@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2141514912032064473}
   - component: {fileID: 2141514912034882033}
   - component: {fileID: 1028212040963906938}
+  - component: {fileID: -4235403948780814981}
   m_Layer: 0
   m_Name: SoldierExplode
   m_TagString: enemyBody
@@ -133,3 +134,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5883762, y: 0.51863396}
   m_EdgeRadius: 0
+--- !u!114 &-4235403948780814981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141514912044338275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b394e7657744f0fb151116355530bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public int nowHP = 10;
     public float moveSpeed = 1f;
     public float moveSpeedinZAxis = 1f;
-    public GameObject bulletPrefeb;
+    public bool deadCreditCheck = false;
     public Transform muzzle;
 
     public float bulletSpeed = 10f;
@@ -18,8 +18,11 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public BackgroundScrolling backgroundScrolling;
 
+    public GameObject playerBody;
+    public GameObject bulletPrefeb;
     public GameObject prfHpBar;
     public GameObject canvas;
+    public GameObject deadCredit;
     public float height = 1f;
     RectTransform hpBar;
 
@@ -58,6 +61,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
+        }
+
+        if (nowHP <= 0)
+        {
+            Destroy(gameObject);
+            Quaternion rotation = Quaternion.Euler(0, 0, -90f);
+            Instantiate(playerBody, transform.position, rotation);
+            deadCreditCheck = true;
+            if (deadCreditCheck)
+            {
+                deadCredit.SetActive(true);
+                GameManager.deadCreditCheck = true;
+            }
         }
     }
 
@@ -114,10 +130,6 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             nowHP -= 1;
             Debug.Log(nowHP);
-            if (nowHP <= 0)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 

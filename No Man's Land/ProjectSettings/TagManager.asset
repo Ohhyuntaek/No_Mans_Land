@@ -11,6 +11,7 @@ TagManager:
   - enemyBullet
   - enemyBody
   - enemyTrench
+  - bombExplosion
   layers:
   - Default
   - TransparentFX
@@ -53,6 +54,9 @@ TagManager:
     locked: 0
   - name: Trench
     uniqueID: 3898641767
+    locked: 0
+  - name: SandBags
+    uniqueID: 2393439505
     locked: 0
   - name: Gun
     uniqueID: 400499335
