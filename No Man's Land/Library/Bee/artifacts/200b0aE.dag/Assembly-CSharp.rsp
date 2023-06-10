@@ -383,6 +383,7 @@
 "Assets/Script/Phase2GameManager.cs"
 "Assets/Script/Phase2PlayerController.cs"
 "Assets/Script/PlayerController.cs"
+"Assets/Script/PlayerDeadScript.cs"
 "Assets/Script/TankBullet.cs"
 "Assets/Script/TankScript.cs"
 "Assets/Script/TrenchScript.cs"

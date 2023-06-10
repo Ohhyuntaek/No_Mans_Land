@@ -10,9 +10,12 @@ public class Phase2EnemyScript : MonoBehaviour
     public float fireRate = 1f;
     public float bulletSpeed = 7f;
 
+    public static bool DontFireCheck = false;
+
     public GameObject explosedBody;
     public GameObject bulletPrefeb;
 
+    public AudioSource gunShotSound;
     private Rigidbody2D rb;
 
     public Transform muzzle;
@@ -24,6 +27,7 @@ public class Phase2EnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        gunShotSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -79,9 +83,13 @@ public class Phase2EnemyScript : MonoBehaviour
 
     private void SpawnBullet()
     {
-        GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
-        Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
-        bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
-        Destroy(enemyBullet, 2f);
+        if (!DontFireCheck)
+        {
+            gunShotSound.Play();
+            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
+            Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
+            bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
+            Destroy(enemyBullet, 2f);
+        }
     }
 }

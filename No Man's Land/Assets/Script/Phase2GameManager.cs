@@ -17,13 +17,18 @@ public class Phase2GameManager : MonoBehaviour
     public bool enableSpawnTank = false;
     public static bool deadCreditCheck = false;
 
+    public AudioSource BackgroundSound;
+
     // private float spawnTime = Random.Range(1f, 5f);
 
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         InvokeRepeating("SpawnEnemy", 3, 3); //3초 후 부터, SpawnEnemy함수를 3초마다 반복해서 실행 시킵니다.
         InvokeRepeating("SpawnTank", afterTime, 15);
+        BackgroundSound = GetComponent<AudioSource>();
+        BackgroundSound.Play();
     }
 
     // Update is called once per frame
@@ -38,11 +43,16 @@ public class Phase2GameManager : MonoBehaviour
                 SceneManager.LoadScene("Phase 1");
             }
         }
+
+        if (Phase2PlayerController.isDead)
+        {
+            BackgroundSound.Pause();
+        }
     }
 
     private void SpawnEnemy()
     {
-        if (enableSpawnEnemy)
+        if (enableSpawnEnemy && !Phase2PlayerController.isDead)
         {
             float randomY = Random.Range(-5f, 5f);
             GameObject spawnEnemy = (GameObject)Instantiate(enemy, new Vector3(10f, randomY, 0f), Quaternion.identity); 
@@ -53,7 +63,7 @@ public class Phase2GameManager : MonoBehaviour
     {
         if (maxTank <= 2)
         {
-            if (enableSpawnTank)
+            if (enableSpawnTank && !Phase2PlayerController.isDead)
             {
                 float randomY = Random.Range(-5f, 5f);
                 float randomZ = Random.Range(0f, 360f);

@@ -16,7 +16,10 @@ public class PlayerController : MonoBehaviour
     public float bulletSpeed = 10f;
     public int extraBullet = 30;
     public Rigidbody2D rb;
+    public AudioSource gunShotSound;
     public BackgroundScrolling backgroundScrolling;
+
+    public static bool isDead = false;
 
     public GameObject playerBody;
     public GameObject bulletPrefeb;
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        gunShotSound = GetComponent<AudioSource>();
         // backgroundScrolling.StopScrolling();
 
         hpBar = Instantiate(prfHpBar, canvas.transform).GetComponent<RectTransform>();
@@ -65,6 +69,8 @@ public class PlayerController : MonoBehaviour
 
         if (nowHP <= 0)
         {
+            EnemyScript.DontFireCheck = true;
+            isDead = true;
             Destroy(gameObject);
             Quaternion rotation = Quaternion.Euler(0, 0, -90f);
             Instantiate(playerBody, transform.position, rotation);
@@ -108,6 +114,7 @@ public class PlayerController : MonoBehaviour
     {
         if (extraBullet > 0)
         {
+            gunShotSound.Play();
             GameObject spawnedBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
             Rigidbody2D bulletRb = spawnedBullet.GetComponent<Rigidbody2D>();
             bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
@@ -139,7 +146,7 @@ public class PlayerController : MonoBehaviour
         {
             extraBullet = 30;
             Debug.Log("Extra Bullet is " + extraBullet + ". " + "Fire Again!");
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject, 0.3f);
         }
         else if (collision.gameObject.CompareTag("enemyTrench"))
         {

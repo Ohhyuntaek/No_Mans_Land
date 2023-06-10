@@ -12,6 +12,8 @@ public class TankScript : MonoBehaviour
     public int HP = 10;
     private float timer = 0f;
 
+    public static bool DontFireCheck = false;
+
     public GameObject explosedTank;
     public GameObject bulletPrefeb;
 
@@ -90,11 +92,14 @@ public class TankScript : MonoBehaviour
 
     private void SpawnBullet()
     {
-        bulletShotSound.Play();
-        GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
-        Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
-        bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
-        // Destroy(enemyBullet, 1.3f);
+        if (!DontFireCheck)
+        {
+            bulletShotSound.Play();
+            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
+            Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
+            bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
+            // Destroy(enemyBullet, 1.3f);
+        }
     }
 
 }

@@ -12,6 +12,8 @@ public class Phase2PlayerController : MonoBehaviour
     public float moveSpeedinZAxis = 1f;
     public bool deadCreditCheck = false;
 
+    public static bool isDead = false;
+
     public GameObject bulletPrefeb;
     public Transform muzzle;
 
@@ -66,6 +68,9 @@ public class Phase2PlayerController : MonoBehaviour
 
         if (nowHP <= 0)
         {
+            Phase2EnemyScript.DontFireCheck = true;
+            TankScript.DontFireCheck = true;
+            isDead = true;
             Destroy(gameObject);
             Quaternion rotation = Quaternion.Euler(0, 0, -90f);
             Instantiate(playerBody, transform.position, rotation);
