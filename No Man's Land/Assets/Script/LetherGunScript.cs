@@ -22,10 +22,12 @@ public class LetherGunScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Phase2GameManager.isLetherGunSpawned = false;
             gunShotSound.Play();
             Phase2GameManager.isActivateLetherGun = true;
             Destroy(gameObject, 0.5f);
             Invoke("isActivateLetherGunFalse", 0.1f);
+            Phase2GameManager.letherGunTimeFloat = 20f;
         }
     }
 

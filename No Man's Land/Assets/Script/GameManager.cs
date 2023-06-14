@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject enemy;
+    public GameObject pausedCredit;
     public AudioSource BackgroundSound;
+
     public bool enableSpawn = false;
+    public bool isTimePaused = false;
     public static bool deadCreditCheck = false;
     // private float spawnTime = Random.Range(1f, 5f);
 
@@ -15,7 +18,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        InvokeRepeating("SpawnEnemy", 3, 3); //3초 후 부터, SpawnEnemy함수를 3초마다 반복해서 실행 시킵니다.
+        InvokeRepeating("SpawnEnemy", 3, 1.7f); //3초 후 부터, SpawnEnemy함수를 3초마다 반복해서 실행 시킵니다.
         BackgroundSound = GetComponent<AudioSource>();
         BackgroundSound.Play();
     }
@@ -34,6 +37,22 @@ public class GameManager : MonoBehaviour
         if(PlayerController.isDead)
         {
             BackgroundSound.Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if(isTimePaused == false)
+        {
+            Time.timeScale = 0;
+            pausedCredit.SetActive(true);
+            isTimePaused = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pausedCredit.SetActive(false);
+            isTimePaused = false;
         }
     }
 

@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 lld filter=lfs diff=lfs merge=lfs -text
+No[[:space:]]Man's[[:space:]]Land/Library/ArtifactDB filter=lfs diff=lfs merge=lfs -text

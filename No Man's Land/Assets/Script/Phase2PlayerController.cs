@@ -47,11 +47,14 @@ public class Phase2PlayerController : MonoBehaviour
     {
         Move();
 
-        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 0.5f, transform.position.y + height, 0));
+        // HP Bar
+        // Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 0.5f, transform.position.y + height, 0));
+        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x + 1000f, transform.position.y + height, 0));
         hpBar.position = _hpBarPos;
 
         nowHPBar.fillAmount = (float)nowHP / (float)maxHP;
 
+        // 카메라 밖으로 플레이어가 나가는 것을 방지
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
         if (pos.x < 0f) pos.x = 0f;
@@ -61,11 +64,13 @@ public class Phase2PlayerController : MonoBehaviour
 
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        // K를 누르면 플레이어가 공격 
+        if (Input.GetKeyDown(KeyCode.K))
         {
             Shoot();
         }
 
+        // 플레이어 사망 
         if (nowHP <= 0)
         {
             Phase2EnemyScript.DontFireCheck = true;
@@ -80,6 +85,7 @@ public class Phase2PlayerController : MonoBehaviour
 
     private void Move()
     {
+        // 플레이어 움직임 (상, 하)
         // float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -89,6 +95,7 @@ public class Phase2PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        // 플레이어 공격 메소드 
         gunShotSound.Play();
         GameObject spawnedBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
         Rigidbody2D bulletRb = spawnedBullet.GetComponent<Rigidbody2D>();
@@ -100,14 +107,14 @@ public class Phase2PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("enemyBullet"))
         {
+            // 적 총알에 맞았을 때 
             Destroy(collision.gameObject);
             nowHP -= 1;
-            Debug.Log(nowHP);
         }
         if (collision.gameObject.CompareTag("bombExplosion"))
         {
-            nowHP -= 1;
-            Debug.Log(nowHP);
+            // 탱크 포탄의 폭발에 맞았을 때 
+            nowHP -= 3;
         }
     }
 }

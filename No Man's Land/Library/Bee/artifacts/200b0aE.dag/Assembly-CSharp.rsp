@@ -389,6 +389,7 @@
 "Assets/Script/TankBullet.cs"
 "Assets/Script/TankScript.cs"
 "Assets/Script/TrenchScript.cs"
+"Assets/_Heathen Engineering/Samples/UX Examples/Flat Icons [Free]/ToggleSetAnimatorBoolean.cs"
 -langversion:9.0
 
 /deterministic

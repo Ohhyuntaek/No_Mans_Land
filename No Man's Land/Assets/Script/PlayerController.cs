@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public float bulletSpeed = 10f;
     public int extraBullet = 30;
+    public TMP_Text extraBulletText;
+    public GameObject noBulletText;
     public Rigidbody2D rb;
     public AudioSource gunShotSound;
     public BackgroundScrolling backgroundScrolling;
@@ -48,11 +51,16 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 0.5f, transform.position.y + height, 0));
+        extraBulletText.text = extraBullet + " / " + 30;
+
+        // HP Bar
+        // Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 0.5f, transform.position.y + height, 0));
+        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x + 1000f, transform.position.y + height, 0));
         hpBar.position = _hpBarPos;
 
         nowHPBar.fillAmount = (float)nowHP / (float)maxHP;
 
+        // 카메라 밖으로 플레이어가 나가는 것을 방지 
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
         if (pos.x < 0f) pos.x = 0f;
@@ -62,11 +70,23 @@ public class PlayerController : MonoBehaviour
 
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 총알 
+        if (extraBullet > 0)
         {
-            Shoot();
+            // 여분의 총알이 있을 때 
+            noBulletText.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                Shoot();
+            }
+        }
+        else if (extraBullet <= 0)
+        {
+            // 총알이 없을 때 
+            noBulletText.SetActive(true);
         }
 
+        // 플레이어 사망 
         if (nowHP <= 0)
         {
             EnemyScript.DontFireCheck = true;
@@ -85,12 +105,14 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        // 플레이어 움직임 (상 하 좌 우)
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector2 movement = new Vector2(horizontalInput, verticalInput);
         rb.velocity = movement * moveSpeed;
 
+        // Horizontal, Vertical의 Input에 따라 배경 움직임 
         if (horizontalInput < 0f)
         {
             backgroundScrolling.StartScrollingForward();
@@ -112,21 +134,13 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (extraBullet > 0)
-        {
-            gunShotSound.Play();
-            GameObject spawnedBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
-            Rigidbody2D bulletRb = spawnedBullet.GetComponent<Rigidbody2D>();
-            bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
-            Destroy(spawnedBullet, 1.3f);
-            extraBullet -= 1;
-            Debug.Log("extraBullet : " + extraBullet);
-        }
-        else if (extraBullet == 0)
-        {
-            extraBullet = 0;
-            Debug.Log("Extra Bullet is " + extraBullet);
-        }
+        // 플레이어 공격 메소드 
+        gunShotSound.Play();
+        GameObject spawnedBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
+        Rigidbody2D bulletRb = spawnedBullet.GetComponent<Rigidbody2D>();
+        bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
+        Destroy(spawnedBullet, 1.3f);
+        extraBullet -= 1;
         
     }
 
@@ -134,18 +148,19 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("enemyBullet"))
         {
+            // 적 총알에 맞았을 때 
             Destroy(collision.gameObject);
             nowHP -= 1;
-            Debug.Log(nowHP);
         }
         if (collision.gameObject.CompareTag("enemyBody"))
         {
+            // 적 시체를 밟았을 때 
             extraBullet = 30;
-            Debug.Log("Extra Bullet is " + extraBullet + ". " + "Fire Again!");
             Destroy(collision.gameObject, 0.3f);
         }
         else if (collision.gameObject.CompareTag("enemyTrench"))
         {
+            // 적 참호에 도착했을 때 
             Time.timeScale = 0f;
             EnemyTrenchScript.creditCheck = true;
         }

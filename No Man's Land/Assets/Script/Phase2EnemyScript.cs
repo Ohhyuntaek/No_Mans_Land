@@ -100,4 +100,5 @@ public class Phase2EnemyScript : MonoBehaviour
             Destroy(enemyBullet, 2f);
         }
     }
+
 }

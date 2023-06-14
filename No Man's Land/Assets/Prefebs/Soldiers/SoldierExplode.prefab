@@ -125,6 +125,7 @@ MonoBehaviour:
   movementSpeedSlow: 1
   reloadSound: {fileID: 0}
   reload: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
+  fadeDuration: 8
 --- !u!82 &1466355823801318473
 AudioSource:
   m_ObjectHideFlags: 0
