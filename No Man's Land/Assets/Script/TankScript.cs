@@ -52,14 +52,17 @@ public class TankScript : MonoBehaviour
 
             // 플레이어를 향해 회전
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion angleAxis = Quaternion.AngleAxis(angle + 180f, Vector3.forward);
-            Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis, rotationSpeed * Time.deltaTime);
+            Quaternion angleAxis = Quaternion.AngleAxis(angle + 180f,
+                Vector3.forward);
+            Quaternion rotation = Quaternion.Slerp(transform.rotation,
+                angleAxis, rotationSpeed * Time.deltaTime);
             transform.rotation = rotation;
 
             if (distance > stoppingDistance)
             {
                 // 특정 거리(stoppingDistance)보다 멀리 있을 경우 이동
-                transform.position = Vector2.MoveTowards(transform.position, player.position, movementSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position,
+                    player.position, movementSpeed * Time.deltaTime);
                 // rb.MoveRotation(Quaternion.Euler(rotation));
             }
         }
@@ -80,6 +83,19 @@ public class TankScript : MonoBehaviour
         }
     }
 
+    private void SpawnBullet()
+    {
+        if (!DontFireCheck && !Phase2GameManager.isRedTankDown)
+        {
+            bulletShotSound.Play();
+            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position,
+                muzzle.rotation);
+            Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
+            bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
+            // Destroy(enemyBullet, 1.3f);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("bullet"))
@@ -97,16 +113,6 @@ public class TankScript : MonoBehaviour
         }
     }
 
-    private void SpawnBullet()
-    {
-        if (!DontFireCheck && !Phase2GameManager.isRedTankDown)
-        {
-            bulletShotSound.Play();
-            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
-            Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
-            bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
-            // Destroy(enemyBullet, 1.3f);
-        }
-    }
+    
 
 }

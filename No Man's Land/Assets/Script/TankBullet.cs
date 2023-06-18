@@ -23,7 +23,8 @@ public class TankBullet : MonoBehaviour
         if (collision.gameObject.CompareTag("enemyTrench"))
         {
             Destroy(gameObject);
-            GameObject explosedAnmation = Instantiate(explosedTankBullet, transform.position, transform.rotation);
+            GameObject explosedAnmation = Instantiate(explosedTankBullet,
+                transform.position, transform.rotation);
             Destroy(explosedAnmation, 1.4f);
         }
     }

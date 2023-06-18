@@ -46,18 +46,21 @@ public class EnemyScript : MonoBehaviour
         {
             float distance = Vector2.Distance(transform.position, player.position);
 
-            Vector2 direction = new Vector2(transform.position.x - player.position.x, transform.position.y - player.position.y);
+            Vector2 direction = new Vector2(transform.position.x - player.position.x,
+                transform.position.y - player.position.y);
 
             // 플레이어를 향해 회전
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion angleAxis = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-            Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis, rotationSpeed * Time.deltaTime);
+            Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis,
+                rotationSpeed * Time.deltaTime);
             transform.rotation = rotation;
 
             if(distance > stoppingDistance)
             {
                 // 특정 거리(stoppingDistance)보다 멀리 있을 경우 이동
-                transform.position = Vector2.MoveTowards(transform.position, player.position, movementSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position,
+                    player.position, movementSpeed * Time.deltaTime);
                 // rb.MoveRotation(Quaternion.Euler(rotation));
             }
         }
@@ -86,7 +89,8 @@ public class EnemyScript : MonoBehaviour
         if (!DontFireCheck)
         {
             gunShotSound.Play();
-            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position, muzzle.rotation);
+            GameObject enemyBullet = Instantiate(bulletPrefeb, muzzle.position,
+                muzzle.rotation);
             Rigidbody2D bulletRb = enemyBullet.GetComponent<Rigidbody2D>();
             bulletRb.AddForce(bulletSpeed * muzzle.right, ForceMode2D.Impulse);
             Destroy(enemyBullet, 1.3f);

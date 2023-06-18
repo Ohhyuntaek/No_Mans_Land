@@ -47,17 +47,8 @@ public class BackgroundScrolling : MonoBehaviour
 
         if (layer.position.x < resetPosition)
         {
-            layer.position = new Vector2(layer.position.x + backgroundWidth, layer.position.y);
-        }
-    }
-
-    private void ScrollBackgroundReverse(Transform layer)
-    {
-        layer.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
-
-        if (layer.position.x < resetPosition)
-        {
-            layer.position = new Vector2(layer.position.x + backgroundWidth, layer.position.y);
+            layer.position = new Vector2(layer.position.x + backgroundWidth,
+                layer.position.y);
         }
     }
 
@@ -80,4 +71,15 @@ public class BackgroundScrolling : MonoBehaviour
     {
         isScrollingReverse = false;
     }
+
+    private void ScrollBackgroundReverse(Transform layer)
+    {
+        layer.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
+
+        if (layer.position.x < resetPosition)
+        {
+            layer.position = new Vector2(layer.position.x + backgroundWidth, layer.position.y);
+        }
+    }
+
 }

@@ -35,7 +35,8 @@ public class EnemyTrenchScript : MonoBehaviour
 
     private void SpawnEnemyTrench()
     {
-        Vector3 spawnPosition = new Vector3(11f, transform.position.y, transform.position.z);
+        Vector3 spawnPosition = new Vector3(11f, transform.position.y,
+            transform.position.z);
         Instantiate(enemyTrenchPrefeb, spawnPosition, transform.rotation);
         float playerMovement = Input.GetAxis("Horizontal");
         MoveTrench(playerMovement);

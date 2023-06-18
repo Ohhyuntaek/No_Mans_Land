@@ -31,7 +31,8 @@ public class EnemyBodyScript : MonoBehaviour
         MoveBody(playerMovement);
 
         float timeSinceFadeStart = Time.time - fadeStartTime;
-        float alpha = 1f - (timeSinceFadeStart / fadeDuration); // 점점 투명해지는 효과를 위한 alpha 계산
+        // 점점 투명해지는 효과를 위한 alpha 계산
+        float alpha = 1f - (timeSinceFadeStart / fadeDuration); 
         alpha = Mathf.Clamp01(alpha); // alpha 값을 0과 1 사이로 제한
 
         // Material의 투명도 조절
